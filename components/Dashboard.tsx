@@ -324,6 +324,8 @@ export default function Dashboard() {
   const { isLoading, progress, predictionData, runPrediction } =
     usePrediction();
 
+  const [hide, setHide] = useState(true);
+
   const { isLoggedIn } = useAuth();
   const router = useRouter();
 
@@ -359,6 +361,12 @@ export default function Dashboard() {
     }
 
     await runPrediction(placeholderData);
+    setHide(false);
+    toast({
+      title: "Prediction completed",
+      description: "The dataset has been uploaded and predicted.",
+      variant: "success",
+    });
   }, [file, runPrediction]);
 
   if (!isLoggedIn) {
@@ -368,9 +376,7 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">
-        Employee Promotion Prediction Dashboard
-      </h1>
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
 
       <Card className="mb-8">
         <CardHeader>
@@ -395,7 +401,7 @@ export default function Dashboard() {
 
       {isLoading ? (
         <LoadingSkeleton />
-      ) : (
+      ) : hide ? null : (
         <>
           <PredictionChart data={predictionData} />
 
@@ -409,6 +415,9 @@ export default function Dashboard() {
           </Card>
         </>
       )}
+      <footer className="mt-8 text-center text-sm text-gray-600">
+        <p>Made with ❤️</p>
+      </footer>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0a62a9", "#F5C644"];
 
 interface PredictionChartProps {
   data: Employee[];
@@ -42,7 +42,7 @@ export function PredictionChart({ data }: PredictionChartProps) {
     }, {} as Record<string, { total: number; promoted: number }>)
   ).map(([channel, data]) => ({
     name: channel,
-    promotionRate: (data.promoted / data.total) * 100,
+
     totalEmployees: data.total,
   }));
 
@@ -58,21 +58,16 @@ export function PredictionChart({ data }: PredictionChartProps) {
               <BarChart data={barChartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-                <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+                <YAxis yAxisId="left" orientation="left" stroke="#0a62a9" />
+                <YAxis yAxisId="right" orientation="right" stroke="#0a62a9" />
                 <Tooltip />
                 <Legend />
-                <Bar
-                  yAxisId="left"
-                  dataKey="promotionRate"
-                  name="Promotion Rate (%)"
-                  fill="#8884d8"
-                />
+
                 <Bar
                   yAxisId="right"
                   dataKey="totalEmployees"
                   name="Total Employees"
-                  fill="#82ca9d"
+                  fill="#0a62a9"
                 />
               </BarChart>
             </ResponsiveContainer>

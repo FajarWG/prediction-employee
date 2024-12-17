@@ -12,7 +12,7 @@ export const placeholderData = [
     length_of_service: 5,
     awards_won: 1,
     avg_training_score: 85,
-    predicted_promotion: true,
+    predicted_promotion: false,
   },
   {
     employee_id: 2,
