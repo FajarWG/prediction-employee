@@ -18,7 +18,11 @@ export default function Navbar() {
   }, [logout, router]);
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav
+      className={`bg-primary text-white p-4
+      ${pathname === "/" ? "hidden" : "block"}
+    `}
+    >
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-bold">
           Employee Promotion Prediction
