@@ -1,11 +1,21 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useCallback } from "react";
 
 export default function Navbar() {
-  const pathname = usePathname()
+  const pathname = usePathname();
+
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = useCallback(() => {
+    logout();
+    router.push("/");
+  }, [logout, router]);
 
   return (
     <nav className="bg-gray-800 text-white p-4">
@@ -14,9 +24,9 @@ export default function Navbar() {
           Employee Promotion Prediction
         </Link>
         <div>
-          {pathname === '/dashboard' ? (
-            <Button variant="ghost" asChild>
-              <Link href="/">Logout</Link>
+          {pathname === "/dashboard" ? (
+            <Button variant="destructive" onClick={() => handleLogout()}>
+              Logout
             </Button>
           ) : (
             <Button variant="ghost" asChild>
@@ -26,6 +36,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
-

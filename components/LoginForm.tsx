@@ -1,23 +1,41 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const router = useRouter()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const { login } = useAuth();
+
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically handle authentication
-    // For this example, we'll just redirect to the dashboard
-    router.push('/dashboard')
-  }
+    e.preventDefault();
+    if (login(username, password)) {
+      router.push("/dashboard");
+    } else {
+      toast({
+        title: "Login failed",
+        description: "Invalid username or password",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <Card>
@@ -48,10 +66,11 @@ export default function LoginForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full">Sign In</Button>
+          <Button type="submit" className="w-full">
+            Sign In
+          </Button>
         </CardFooter>
       </form>
     </Card>
-  )
+  );
 }
-
